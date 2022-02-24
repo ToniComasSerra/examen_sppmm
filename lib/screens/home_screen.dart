@@ -1,4 +1,6 @@
+import 'package:examen_sppmm/providers/list_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens.dart';
 
@@ -8,13 +10,14 @@ class HomeScreen extends StatelessWidget {
       builder: (context) => HomeScreen(mensaje: mensaje),
     );
   }
-
   final String mensaje;
-
   const HomeScreen({Key? key, required this.mensaje}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final listProvider = Provider.of<ListProvider>(context, listen: false);
+    final despeses = listProvider.despeses;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Inici'),
@@ -22,12 +25,29 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.delete_forever),
             onPressed: () {
-              // TODO: Esborrar tot
+              print('Boton De Eliminar Todo Pulsado');
+              final listProvider = Provider.of<ListProvider>(context, listen: false);
+              listProvider.esborraTotes();
             },
           )
         ],
       ),
-      body: Column(
+      body: ListView.builder(
+        itemCount: despeses.length,
+        itemBuilder: (_,index) => ListTile(
+          leading: Icon(Icons.star_border_outlined),
+          title: Text(despeses[index].titol),
+          subtitle: Text(despeses[index].quantitat),
+          trailing: Icon(
+            Icons.keyboard_arrow_right_outlined,
+            color: Colors.grey  
+          ),
+          onTap: (){
+
+          },
+        ),
+      ),
+      /*body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Row(
@@ -45,10 +65,13 @@ class HomeScreen extends StatelessWidget {
             ],
           )
         ],
-      ),
+      ),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
+          print('Boton De Añadir Pulsado');
+          final listProvider = Provider.of<ListProvider>(context, listen: false);
+          listProvider.afegeixDespesa('ELDER RING', '78.00');
+          print(despeses);
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),

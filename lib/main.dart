@@ -1,10 +1,17 @@
+import 'package:examen_sppmm/providers/db_provider.dart';
+import 'package:examen_sppmm/providers/list_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => ListProvider())
+  ],
+  child: MyApp(),
+));
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
