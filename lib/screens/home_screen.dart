@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listProvider = Provider.of<ListProvider>(context, listen: false);
+    final listProvider = Provider.of<ListProvider>(context);
     final despeses = listProvider.despeses;
 
     return Scaffold(
